@@ -241,7 +241,8 @@ def policy_iteration(env, gamma=0.99, theta=1e-8):
 
 
 ### Total policy iterations:
-<img width="967" height="774" alt="image" src="https://github.com/user-attachments/assets/c8fd141c-9978-4b94-bc1c-9943dd617f35" />
+<img width="741" height="532" alt="image" src="https://github.com/user-attachments/assets/182f6e44-0f64-4567-ba42-d4af71f6fdd9" />
+
 
 
 ### Optimal State-Value Function:
