@@ -251,12 +251,20 @@ def policy_iteration(env, gamma=0.99, theta=1e-8):
 
 ## Result
 
+The program displays:
 
+  1.Number of policy iterations.
+
+  2.Total policy evaluation iterations.
+
+  3.Optimal state-value function.
+
+  4.Optimal state-value function in a 4 × 4 grid.
+
+  5.Optimal policy in a 4 × 4 grid.
+
+  6.Optimal action probabilities for each state.
 
 ## Inference
-```text
 
-
-```
----
-
+The Policy Iteration algorithm was successfully implemented using the Gymnasium FrozenLake-v1 environment. The algorithm performed Policy Evaluation to calculate the state-value function and Policy Improvement to update the policy based on the maximum expected rewards. These steps were repeated until the policy became stable. Finally, the optimal state-value function and optimal policy were obtained, helping the agent identify the best actions to reach the goal while avoiding the holes in the FrozenLake environment.
