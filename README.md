@@ -129,17 +129,100 @@ If the improved policy is the same as the old policy, the policy is considered s
 # -------------------------------------------------
 # Policy Evaluation
 # -------------------------------------------------
+policy = np.ones((n_states, n_actions)) / n_actions
+def policy_evaluation(env, policy, gamma=0.99, theta=1e-8):
+    n_states = env.observation_space.n
+    V = np.zeros(n_states)
+    iterations = 0
+
+    while True:
+        delta = 0
+        iterations += 1
+        for s in range(n_states):
+            v = V[s]
+            new_value = 0
+            for a in range(env.action_space.n):
+                prob_a = policy[s][a]
+                for prob, next_state, reward, done in env.P[s][a]:
+                    new_value += prob_a * prob * (reward + gamma * V[next_state])
+            V[s] = new_value
+            delta = max(delta, abs(v - V[s]))
+
+        if delta < theta:
+            break
+
+    return V, iterations
+
+V, iterations = policy_evaluation(env, policy, gamma, theta)
+
+print("Name: Chiiradeep R  ")
+print("Register Number: 212224240028 ")
+print("Number of iterations:", iterations)
+print("\nState-Value Function:")
+print(V)
+
+print("\nName: Chiiradeep R ")
+print("Register Number: 212224240028 ")
+print("\nState-Value Function as 4x4 Grid:")
+print(np.round(V.reshape(4, 4), 4))
+
+
+print("\nPolicy as 4x4 Grid:")
+
+action_symbols = ['←', '↓', '→', '↑']
+
+for s in range(n_states):
+    actions = []
+
+    for a in range(n_actions):
+        actions.append(f"{action_symbols[a]}: {policy[s][a]:.2f}")
+
+    print(f"State {s}: " + " | ".join(actions))
 
 
 
 # -------------------------------------------------
 # Policy Improvement
 # -------------------------------------------------
+def policy_improvement(env, V, gamma=0.99):
+    n_states = env.observation_space.n
+    n_actions = env.action_space.n
+
+    policy = np.zeros((n_states, n_actions))
+
+    for state in range(n_states):
+        action_values = np.zeros(n_actions)
+
+        for action in range(n_actions):
+            for prob, next_state, reward, terminated in env.P[state][action]:
+                action_values[action] += prob * (
+                    reward + gamma * V[next_state] * (not terminated)
+                )
+
+        best_action = np.argmax(action_values)
+        policy[state, best_action] = 1.0
+
+    return policy
 
 #-------------------------------------------------
 # Policy Iteration
 # -------------------------------------------------
+def policy_iteration(env, gamma=0.99, theta=1e-8):
+    n_states = env.observation_space.n
+    n_actions = env.action_space.n
 
+    policy = np.ones((n_states, n_actions)) / n_actions
+
+    while True:
+        V, _ = policy_evaluation(env, policy, gamma, theta)
+        new_policy = policy_improvement(env, V, gamma)
+
+        if np.array_equal(policy, new_policy):
+            break
+
+        policy = new_policy
+
+    return policy, V
 
 
 
@@ -147,29 +230,28 @@ If the improved policy is the same as the old policy, the policy is considered s
 
 ## Output
 
-```text
-
-Total policy iterations: 
-
-Optimal State-Value Function:
 
 
-Optimal Policy:
+### Total policy iterations:
+<img width="967" height="774" alt="image" src="https://github.com/user-attachments/assets/c8fd141c-9978-4b94-bc1c-9943dd617f35" />
 
-```
+
+### Optimal State-Value Function:
+<img width="615" height="192" alt="image" src="https://github.com/user-attachments/assets/d7ad07b9-9eb0-476c-bc3f-7c958e59731b" />
 
 
 
----
+### Optimal Policy:
+<img width="519" height="177" alt="image" src="https://github.com/user-attachments/assets/91ef06d8-6653-4d3c-99e9-2774debea116" />
+
+
+
+
+
 
 ## Result
 
-```text
 
-
-
-```
----
 
 ## Inference
 ```text
