@@ -167,17 +167,25 @@ print("\nState-Value Function as 4x4 Grid:")
 print(np.round(V.reshape(4, 4), 4))
 
 
-print("\nPolicy as 4x4 Grid:")
+print("\nFinal Optimal Policy as 4x4 Grid:")
 
 action_symbols = ['←', '↓', '→', '↑']
 
+policy_grid = []
+
 for s in range(n_states):
-    actions = []
 
-    for a in range(n_actions):
-        actions.append(f"{action_symbols[a]}: {policy[s][a]:.2f}")
+    if s in [5, 7, 11, 12]:
+        policy_grid.append("H")
 
-    print(f"State {s}: " + " | ".join(actions))
+    elif s == 15:
+        policy_grid.append("G")
+
+    else:
+        best_action = np.argmax(optimal_policy[s])
+        policy_grid.append(action_symbols[best_action])
+
+print(np.array(policy_grid).reshape(4, 4))
 
 
 
