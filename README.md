@@ -241,7 +241,7 @@ def policy_iteration(env, gamma=0.99, theta=1e-8):
 
 
 ### Total policy iterations:
-<img width="741" height="532" alt="image" src="https://github.com/user-attachments/assets/182f6e44-0f64-4567-ba42-d4af71f6fdd9" />
+<img width="741" height="532" alt="image" src="https://github.com/user-attachments/assets/284a92bd-478f-4060-9a41-19e58386d903" />
 
 
 
